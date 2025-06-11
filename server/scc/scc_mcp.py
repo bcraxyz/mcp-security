@@ -321,9 +321,10 @@ def main() -> None:
   if not scc_client:
     logger.critical("SCC Client failed to initialize. MCP server cannot serve SCC tools.")
 
-  logger.info("Starting SCC MCP server...")
-
-  mcp.run(transport="streamable-http", path="/mcp", host="0.0.0.0", port=8080)
+  port = int(os.environ.get("PORT", 8080))
+  logger.info(f"Starting SCC MCP server on port {port}...")
+  
+  mcp.run(transport="sse", path="/sse", host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     main()
