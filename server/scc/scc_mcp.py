@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import logging
-import os
+import os, asyncio
 from typing import Any, Dict, List
 
 from google.api_core import exceptions as google_exceptions
@@ -316,7 +316,7 @@ async def get_finding_remediation(
 
 # --- Main execution ---
 
-def main() -> None:
+async def main() -> None:
   """Runs the FastMCP server."""
   if not scc_client:
     logger.critical("SCC Client failed to initialize. MCP server cannot serve SCC tools.")
@@ -324,7 +324,7 @@ def main() -> None:
   port = int(os.environ.get("PORT", 8080))
   logger.info(f"Starting SCC MCP server on port {port}...")
   
-  mcp.run(transport="sse", path="/sse", host="0.0.0.0", port=port)
+  await mcp.run_async(transport="sse", path="/sse", host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
