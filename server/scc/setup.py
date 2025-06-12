@@ -21,7 +21,7 @@ setup(
     version="0.1.0",
     py_modules=["scc_mcp", "main"],
     install_requires=[
-        "mcp",
+        "fastmcp",
         "google-cloud-securitycenter",
         "google-cloud-asset",
     ],
