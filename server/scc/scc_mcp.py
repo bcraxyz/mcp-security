@@ -19,7 +19,7 @@ from google.api_core import exceptions as google_exceptions
 from google.cloud import asset_v1
 from google.cloud import securitycenter
 from google.protobuf import json_format 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 
 # Initialize FastMCP server
 mcp = FastMCP("scc-mcp")
@@ -324,7 +324,7 @@ async def main() -> None:
   port = int(os.environ.get("PORT", 8080))
   logger.info(f"Starting SCC MCP server on port {port}...")
   
-  await mcp.run_async(transport="sse", path="/sse", host="0.0.0.0", port=port)
+  await mcp.run_async(transport="streamable-http", path="/mcp", host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     asyncio.run(main())
